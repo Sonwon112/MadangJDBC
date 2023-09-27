@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 
 import swi.jdbc.model.Book;
 import swi.jdbc.model.Customer;
+import swi.jdbc.model.Order;
 
 public class ConnectionRepository {
 	
@@ -81,6 +82,37 @@ public class ConnectionRepository {
 		
 		return book;
 	}
+	
+	public Order selectOrderFindByOrderId(int orderid) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Book book = new Book();
+		try{
+			conn = getConnection();
+			StringBuilder sql = new StringBuilder();
+			sql.append("SELECT bookId, booknName, publisher, price ");
+			sql.append("FROM Orders ");
+			sql.append("WHERE orderid = ?");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setInt(1, orderid);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				book.setBookId(rs.getLong(1));
+				book.setBookName(rs.getString(2));
+				book.setPublisher(rs.getString(3));
+				book.setPrice(rs.getLong(4));
+			}
+			
+		}catch(Exception e){
+			
+		}
+		
+		return book;
+	}
+	
 	
 	
 }

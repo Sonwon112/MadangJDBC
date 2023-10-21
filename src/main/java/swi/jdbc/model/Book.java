@@ -2,8 +2,9 @@ package swi.jdbc.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-@Getter @Setter
+@Getter @Setter @ToString
 public class Book {
 	private Long bookId;
 	private String bookName;
